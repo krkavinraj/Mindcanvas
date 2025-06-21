@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import CanvasArea from "./components/CanvasArea";
 import { getIntent } from "./services/aiService";
+import { useBasic } from '@basictech/react';
+import './App.css';
 
 function App() {
+  const { signin, isSignedIn, user, signout } = useBasic();
+
+  
   const [widgets, setWidgets] = useState([]);
   const [textPrompt, setTextPrompt] = useState("");
 
@@ -35,6 +40,9 @@ function App() {
 
   return (
     <>
+      
+
+
       <div style={{ padding: "10px", background: "#111", color: "#fff" }}>
         <input
           value={textPrompt}
@@ -76,7 +84,20 @@ function App() {
         >
           🎙️ Voice Input
         </button>
+
       </div>
+      
+
+      {isSignedIn ? (
+        <div>
+          <p>Signed in as: {user.email}</p>
+          {/* Add a button to sign out */}
+          <button onClick={signout}>Sign Out</button>
+        </div>
+      ) : (
+        <button onClick={signin}>Sign In</button>
+      )}
+      <br />
 
       <CanvasArea widgets={widgets} />
     </>
